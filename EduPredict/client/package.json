@@ -1,0 +1,51 @@
+{
+  "name": "student-performance-predictor-frontend",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.3",
+    "axios": "^1.9.0",
+    "formik": "^2.4.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.1",
+    "react-toastify": "^11.0.5",
+    "recharts": "^3.3.0",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.0",
+    "@tailwindcss/postcss": "^4.1.8",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.25.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.8",
+    "vite": "^6.3.5"
+  },
+  "description": "Frontend for the student performance prediction system with data visualization capabilities",
+  "main": "eslint.config.js",
+  "keywords": [
+    "student-performance",
+    "education",
+    "analytics",
+    "data-visualization",
+    "react"
+  ],
+  "author": "[Your Name]",
+  "license": "MIT"
+}

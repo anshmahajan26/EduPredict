@@ -1,0 +1,38 @@
+{
+  "name": "student-performance-predictor-server",
+  "version": "2.0.0",
+  "description": "Backend server for the student performance prediction system with integrated ML microservice",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "generate:dataset": "cd microservice && python generate_training_data_1000.py",
+    "train:model": "cd microservice && python train_model.py",
+    "predict": "cd microservice && python predict.py",
+    "setup-ml": "cd microservice && pip install -r requirements.txt"
+  },
+  "keywords": [
+    "student-performance",
+    "machine-learning",
+    "prediction",
+    "education",
+    "analytics"
+  ],
+  "author": "[Your Name]",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
