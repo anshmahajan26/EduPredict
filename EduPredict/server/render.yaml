@@ -8,3 +8,6 @@ services:
       python3 -m pip install --upgrade pip
       python3 -m pip install -r microservice/requirements.txt
     startCommand: node server.js
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10
