@@ -27,6 +27,14 @@ export const predictStudentResult = async (req, res) => {
             });
         }
 
+        // Prepare input data for the Python script as JSON
+        const inputData = {
+            attendance: student.attendance,
+            study_hours: student.studyHours,
+            previous_marks: student.previousMarks,
+            assignment_score: student.assignmentScore
+        };
+
         // Correct path resolution: from controllers to src root then to microservice
         const microserviceDir = path.join(__dirname, "..", "..", "microservice");
         const pythonScriptPath = path.join(microserviceDir, "predict.py");
@@ -47,10 +55,7 @@ export const predictStudentResult = async (req, res) => {
                     // Python is available, proceed with the prediction
                     const py = spawn("python3", [
                         pythonScriptPath, // Use absolute path
-                        student.attendance,
-                        student.studyHours,
-                        student.previousMarks,
-                        student.assignmentScore,
+                        JSON.stringify(inputData)  // Pass JSON string as single argument
                     ], {
                         cwd: path.join(__dirname, "../..") // Set working directory to server root
                     });
@@ -120,10 +125,7 @@ export const predictStudentResult = async (req, res) => {
             // Python3 is available, proceed with the prediction
             const py = spawn("python3", [
                 pythonScriptPath, // Use absolute path
-                student.attendance,
-                student.studyHours,
-                student.previousMarks,
-                student.assignmentScore,
+                JSON.stringify(inputData)  // Pass JSON string as single argument
             ], {
                 cwd: path.join(__dirname, "../..") // Set working directory to server root
             });

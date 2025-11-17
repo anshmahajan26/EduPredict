@@ -9,6 +9,7 @@ import sys
 import pandas as pd
 import joblib
 import os
+import json
 
 def load_prediction_model():
     """
@@ -42,26 +43,29 @@ def load_prediction_model():
         print(f"Error loading model: {str(e)}", file=sys.stderr)
         sys.exit(1)
 
-def prepare_input_data(attendance, study_hours, previous_marks, assignment_score):
+def prepare_input_data(student_data):
     """
     Prepare input data in the correct format for prediction
 
     Args:
-        attendance (float): Student attendance percentage
-        study_hours (float): Hours studied per day
-        previous_marks (float): Previous academic marks
-        assignment_score (float): Assignment score
+        student_data (dict): Student data with attendance, study_hours, previous_marks, assignment_score
 
     Returns:
         pandas.DataFrame: Formatted input data
     """
     try:
+        # Extract the parameters from the input data
+        attendance = float(student_data['attendance'])
+        study_hours = float(student_data['study_hours'])
+        previous_marks = float(student_data['previous_marks'])
+        assignment_score = float(student_data['assignment_score'])
+
         # Create a DataFrame with the input parameters
         input_data = pd.DataFrame([[
-            float(attendance),
-            float(study_hours),
-            float(previous_marks),
-            float(assignment_score)
+            attendance,
+            study_hours,
+            previous_marks,
+            assignment_score
         ]], columns=[
             'Attendance (%)',
             'Study Hours per Day',
@@ -100,23 +104,21 @@ def main():
     Main function to execute the prediction process
     """
     # Validate command line arguments
-    if len(sys.argv) != 5:
-        print("Usage: python predict.py <attendance> <study_hours> <previous_marks> <assignment_score>")
-        print("Example: python predict.py 85.0 4.0 75.0 80.0")
+    if len(sys.argv) != 2:
+        print("Usage: python predict.py '{\"attendance\": 85, \"study_hours\": 4, \"previous_marks\": 75, \"assignment_score\": 80}'")
+        print("Example: python predict.py '{\"attendance\": 85.0, \"study_hours\": 4.0, \"previous_marks\": 75.0, \"assignment_score\": 80.0}'")
         sys.exit(1)
 
     try:
-        # Extract command line arguments
-        attendance = sys.argv[1]
-        study_hours = sys.argv[2]
-        previous_marks = sys.argv[3]
-        assignment_score = sys.argv[4]
+        # Extract and parse the JSON input from command line argument
+        json_input = sys.argv[1]
+        student_data = json.loads(json_input)
 
         # Load the pre-trained model
         model = load_prediction_model()
 
         # Prepare input data
-        input_features = prepare_input_data(attendance, study_hours, previous_marks, assignment_score)
+        input_features = prepare_input_data(student_data)
 
         # Make prediction
         result = make_prediction(model, input_features)
@@ -124,8 +126,14 @@ def main():
         # Output the prediction result
         print(result)
 
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON input. Details: {str(e)}", file=sys.stderr)
+        sys.exit(1)
     except ValueError as e:
         print(f"Error: Invalid input values. Please provide numeric values. Details: {str(e)}", file=sys.stderr)
+        sys.exit(1)
+    except KeyError as e:
+        print(f"Error: Missing required field {str(e)} in input data", file=sys.stderr)
         sys.exit(1)
     except Exception as e:
         print(f"An error occurred during prediction: {str(e)}", file=sys.stderr)
