@@ -27,9 +27,10 @@ export const predictStudentResult = async (req, res) => {
             });
         }
 
-        // Use absolute path for the Python script
-        const serverRoot = path.join(__dirname, "../../../");
-        const pythonScriptPath = path.join(serverRoot, "microservice", "predict.py");
+        // Build path to the microservice directory relative to the main server directory
+        const serverRoot = path.join(__dirname, "../.."); // Go up from controllers to src, then up to server root
+        const microservicePath = path.join(serverRoot, "microservice");
+        const pythonScriptPath = path.join(microservicePath, "predict.py");
 
         // Check if Python is available
         exec("python3 --version", (error, stdout, stderr) => {
@@ -45,14 +46,14 @@ export const predictStudentResult = async (req, res) => {
                     }
 
                     // Python is available, proceed with the prediction
-                    const py = spawn("python", [
+                    const py = spawn("python3", [
                         pythonScriptPath, // Use absolute path
                         student.attendance,
                         student.studyHours,
                         student.previousMarks,
                         student.assignmentScore,
                     ], {
-                        cwd: serverRoot // Set working directory to server root
+                        cwd: serverRoot // Set working directory to server root (where server.js is)
                     });
 
                     let output = "";
