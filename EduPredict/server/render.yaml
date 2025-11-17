@@ -1,11 +1,17 @@
 services:
 - type: web
   name: edupredict-backend
-  env: docker
-  dockerfilePath: Dockerfile
-  rootDirectory: .
+  env: node
+  buildCommand: |
+    npm install
+    apt-get update && apt-get install -y python3 python3-pip
+    python3 -m pip install --upgrade pip
+    python3 -m pip install -r ./microservice/requirements.txt
+  startCommand: npm start
   envVars:
   - key: MONGO_URI
     sync: false
   - key: JWT_SECRET
     sync: false
+  - key: NODE_VERSION
+    value: 18
