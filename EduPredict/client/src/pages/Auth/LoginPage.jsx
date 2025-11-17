@@ -21,7 +21,7 @@ const Login = () => {
     onSubmit: async (values) => {
       setIsSubmitting(true); // Set form as submitting
       try {
-        const response = await API.post('/auth/login', values);
+        const response = await API.post('/api/auth/login', values);
         // console.log(`response`, response)
         if (response?.data?.statusCode === 200) {
           notifySuccess(response?.data?.message);

@@ -29,7 +29,7 @@ const AddStudentForm = () => {
         onSubmit: async (values, { resetForm }) => {
             setSubmitting(true);
             try {
-                const response = await API.post('/students/add', values);
+                const response = await API.post('/api/students/add', values);
                 if (response?.data?.statusCode === 201) {
                     notifySuccess(response?.data?.message || 'Student added successfully');
                     resetForm();

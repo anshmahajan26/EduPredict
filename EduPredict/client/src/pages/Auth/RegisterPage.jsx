@@ -22,7 +22,7 @@ const Register = () => {
         onSubmit: async (values) => {
             setIsSubmitting(true);
             try {
-                const response = await API.post('/auth/register', values);
+                const response = await API.post('/api/auth/register', values);
                 // console.log(`/auth/register response`, response);
                 if (response?.data?.statusCode === 201) {
                     notifySuccess(response?.data?.message)

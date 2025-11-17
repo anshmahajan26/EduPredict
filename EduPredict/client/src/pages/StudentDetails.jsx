@@ -63,7 +63,7 @@ function StudentDetails() {
     const fetchStudentDetails = async () => {
         setLoading(true);
         try {
-            const response = await API.get(`/students/${id}`);
+            const response = await API.get(`/api/students/${id}`);
             if (response?.data?.statusCode === 200) {
                 setStudent(response?.data?.data);
             } else {
@@ -82,7 +82,7 @@ function StudentDetails() {
         setLoadingPrediction(true);
 
         try {
-            const response = await API.post(`/predict/${id}`);
+            const response = await API.post(`/api/predict/${id}`);
             console.log(`response`, response)
             const { message, data } = response?.data || {};
 
@@ -161,7 +161,7 @@ function StudentDetails() {
                             </CardContent>
                         </Card>
                     </Grid>
-                    
+
                     {/* Academic Metrics Chart */}
                     <Grid item xs={12} lg={6}>
                         <Card>

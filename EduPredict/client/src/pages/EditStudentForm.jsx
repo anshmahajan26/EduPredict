@@ -23,7 +23,7 @@ const EditStudentForm = () => {
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const response = await API.get(`/students/${id}`);
+        const response = await API.get(`/api/students/${id}`);
         const data = response?.data?.data;
         setInitialValues({
           name: data?.name || '',
@@ -56,7 +56,7 @@ const EditStudentForm = () => {
     onSubmit: async (values) => {
       setSubmitting(true);
       try {
-        const response = await API.patch(`/students/update/${id}`, values);
+        const response = await API.patch(`/api/students/update/${id}`, values);
         if (response?.data?.statusCode === 200) {
           notifySuccess(response?.data?.message || 'Student updated successfully');
           navigate(`/students/${id}`);

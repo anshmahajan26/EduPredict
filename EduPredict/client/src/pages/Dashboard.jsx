@@ -19,7 +19,7 @@ function Dashboard() {
     const fetchStudents = async (page = 1, name = '') => {
         setLoading(true);
         try {
-            const response = await API.get(`/students`, {
+            const response = await API.get(`/api/students`, {
                 params: { page, limit: 6, name }
             });
             if (response?.data?.statusCode === 200) {
@@ -47,7 +47,7 @@ function Dashboard() {
     const handlePredictResult = async (studentId) => {
         setLoadingPredictionIds((prev) => [...prev, studentId]);
         try {
-            const response = await API.post(`/predict/${studentId}`);
+            const response = await API.post(`/api/predict/${studentId}`);
             const { message, data } = response?.data || {};
             if (response?.data?.statusCode === 200) {
                 notifySuccess(`${message} → ${data?.studentName}: ${data?.prediction}`);
