@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: import.meta.env.VITE_APP_API_URL,
+    baseURL: import.meta.env.VITE_APP_API_URL || 'https://edupredict-amqz.onrender.com',
 });
 
 // Add Authorization header if token exists
