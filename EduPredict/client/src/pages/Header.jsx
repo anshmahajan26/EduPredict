@@ -21,7 +21,17 @@ const Header = () => {
     };
 
     return (
-        <Box sx={{ bgcolor: '#f9f9f9', py: 2, borderBottom: '1px solid #ddd' }}>
+        <Box
+            sx={{
+                bgcolor: '#f9f9f9',
+                py: 2,
+                borderBottom: '1px solid #ddd',
+                position: 'sticky',
+                top: 0,
+                zIndex: 1000,
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}
+        >
             <Container maxWidth="lg">
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography variant="h6" fontWeight="bold" color="primary">

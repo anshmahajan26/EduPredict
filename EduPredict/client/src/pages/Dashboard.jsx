@@ -51,7 +51,25 @@ function Dashboard() {
             const { message, data } = response?.data || {};
             if (response?.data?.statusCode === 200) {
                 notifySuccess(`${message} → ${data?.studentName}: ${data?.prediction}`);
-                fetchStudents(page, nameFilter);
+
+                // Update only the specific student in the UI
+                setData(prevData =>
+                    prevData.map(student =>
+                        student._id === studentId
+                            ? {
+                                ...student,
+                                predictions: [{
+                                    predictedResult: data?.prediction,
+                                    attendance: student.attendance,
+                                    studyHours: student.studyHours,
+                                    previousMarks: student.previousMarks,
+                                    assignmentScore: student.assignmentScore,
+                                    createdAt: new Date().toISOString() // Add timestamp
+                                }, ...student.predictions || []] // Add new prediction to the front
+                              }
+                            : student
+                    )
+                );
             } else {
                 notifyError(message || 'An error occurred while predicting the result');
             }
